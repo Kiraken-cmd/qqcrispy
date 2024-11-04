@@ -31,19 +31,56 @@
         <a href="#about">Tentang Kami</a>
         <a href="#partners">Partner</a>
         <a href="#menu">Menu</a>
+        <a href="#products">Food</a>
         <a href="#contact">Kontak</a>
       </div>
 
       <div class="navbar-extra">
-        <a href="#" id="search"
+        <a href="#" id="search-button"
           ><i class="fa-solid fa-magnifying-glass fa-lg"></i
         ></a>
-        <a href="#" id="shopping-cart"
+        <a href="#" id="shopping-cart-button"
           ><i class="fa-solid fa-cart-shopping fa-lg"></i
         ></a>
         <a href="#" id="hamburger-menu"
           ><i class="fa-solid fa-bars fa-lg"></i
         ></a>
+      </div>
+
+      <!-- Search -->
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="Search Here..." />
+        <label for="search-box"
+          ><i class="fa-solid fa-magnifying-glass fa-sm"></i
+        ></label>
+      </div>
+
+      <!-- Shopping -->
+      <div class="shopping-cart">
+        <div class="cart-item">
+          <img src="img/menu/sayapori.jpg" alt="" />
+          <div class="item-detail">
+            <h3>Product 1</h3>
+            <div class="item-price">IDR 10K</div>
+          </div>
+          <i class="fa-solid fa-trash-can fa-lg" id="remove-item"></i>
+        </div>
+        <div class="cart-item">
+          <img src="img/menu/sayapori.jpg" alt="" />
+          <div class="item-detail">
+            <h3>Product 1</h3>
+            <div class="item-price">IDR 10K</div>
+          </div>
+          <i class="fa-solid fa-trash-can fa-lg" id="remove-item"></i>
+        </div>
+        <div class="cart-item">
+          <img src="img/menu/sayapori.jpg" alt="" />
+          <div class="item-detail">
+            <h3>Product 1</h3>
+            <div class="item-price">IDR 10K</div>
+          </div>
+          <i class="fa-solid fa-trash-can fa-lg" id="remove-item"></i>
+        </div>
       </div>
     </nav>
     <!-- Navbar End -->
@@ -141,8 +178,8 @@
 
     <!-- Menu Section Start -->
     <section class="menu" id="menu">
-      <h2><span>Menu</span> Kami</h2>
-      <p>Berikut berbagai menu kami.</p>
+      <h2><span>Best</span> Menu</h2>
+      <p>Berikut best seller menu kami.</p>
 
       <div class="row">
         <div class="menu-card">
@@ -193,6 +230,81 @@
       </div>
     </section>
     <!-- Menu Section End -->
+
+    <!-- Product Section Start -->
+    <section class="products" id="products">
+      <h2><span>Daftar All</span> Menu</h2>
+
+      <div class="row">
+        <div class="product-card">
+          <div class="product-icons">
+            <a href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+            <a href="#" class="item-detail-button"
+              ><i class="fa-solid fa-eye fa-lg"></i
+            ></a>
+          </div>
+          <div class="product-image">
+            <img src="img/menu/sayapori.jpg" alt="product1" />
+          </div>
+          <div class="product-content">
+            <h3>Sayap ori</h3>
+            <div class="product-stars">
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+            </div>
+            <div class="product-price">IDR 10K</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-icons">
+            <a href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+            <a href="#" class="item-detail-button"
+              ><i class="fa-solid fa-eye fa-lg"></i
+            ></a>
+          </div>
+          <div class="product-image">
+            <img src="img/menu/sayapori.jpg" alt="product1" />
+          </div>
+          <div class="product-content">
+            <h3>Sayap ori</h3>
+            <div class="product-stars">
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+            </div>
+            <div class="product-price">IDR 10K</div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-icons">
+            <a href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+            <a href="#" class="item-detail-button"
+              ><i class="fa-solid fa-eye fa-lg"></i
+            ></a>
+          </div>
+          <div class="product-image">
+            <img src="img/menu/sayapori.jpg" alt="product1" />
+          </div>
+          <div class="product-content">
+            <h3>Sayap ori</h3>
+            <div class="product-stars">
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+            </div>
+            <div class="product-price">IDR 10K</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Product Section End -->
 
     <!-- Contact Section Start -->
     <section class="contact" id="contact">
@@ -257,6 +369,38 @@
         <p>Created by <a href="#">QQCrispy</a>. | &copy; 2024.</p>
       </div>
     </footer>
+
+    <!-- modal box -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"
+          ><i class="fa-solid fa-xmark fa-lg"></i
+        ></a>
+        <div class="modal-content">
+          <img src="img/menu/sayapori.jpg" alt="" />
+          <div class="product-content">
+            <h3>Product 1</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+              delectus quae nulla, voluptatum architecto eius dolorum pariatur
+              saepe impedit.
+            </p>
+            <div class="product-stars">
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+              <i class="fa-regular fa-star fa-lg"></i>
+            </div>
+            <div class="product-price">IDR 10K</div>
+            <a href="#"
+              ><i class="fa-solid fa-cart-shopping fa-lg"></i>
+              <span>add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Javascript -->
     <script src="js/script.js"></script>
