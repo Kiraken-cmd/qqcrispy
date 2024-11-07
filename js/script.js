@@ -60,3 +60,30 @@ window.onclick = (e) => {
     itemDetailModal.style.display = "none";
   }
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+  const popup = document.getElementById("popup");
+  const closePopup = document.getElementById("popup-close");
+  const popupCta = document.querySelector(".popup-cta");
+
+  // Show popup when the page loads
+  setTimeout(() => {
+    popup.classList.add("show");
+  }, 1000); // delay of 1 second before showing
+
+  // Close popup when "x" is clicked
+  closePopup.addEventListener("click", function () {
+    popup.classList.remove("show");
+  });
+
+  // Close popup when clicking outside the content area
+  popup.addEventListener("click", function (event) {
+    if (event.target === popup) {
+      popup.classList.remove("show");
+    }
+  });
+
+  popupCta.addEventListener("click", function () {
+    popup.classList.remove("show");
+  });
+});

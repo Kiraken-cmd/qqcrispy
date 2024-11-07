@@ -20,10 +20,15 @@
     />
     <!-- Css -->
     <link rel="stylesheet" href="css/style.css" />
+    <!-- Alpine.js -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
   </head>
   <body>
     <!-- Navbar Start -->
-    <nav class="navbar">
+    <nav class="navbar" x-data>
       <a href="#" class="navbar-logo">QQ<span>Crispy</span>.</a>
 
       <div class="navbar-nav">
@@ -37,13 +42,18 @@
 
       <div class="navbar-extra">
         <a href="#" id="search-button"
-          ><i class="fa-solid fa-magnifying-glass fa-lg"></i
+          ><i class="fa-solid fa-magnifying-glass fa-xl"></i
         ></a>
         <a href="#" id="shopping-cart-button"
-          ><i class="fa-solid fa-cart-shopping fa-lg"></i
+          ><i class="fa-solid fa-cart-shopping fa-xl"></i>
+          <span
+            class="quantity-badge"
+            x-show="$store.cart.quantity"
+            x-text="$store.cart.quantity"
+          ></span
         ></a>
         <a href="#" id="hamburger-menu"
-          ><i class="fa-solid fa-bars fa-lg"></i
+          ><i class="fa-solid fa-bars fa-xl"></i
         ></a>
       </div>
 
@@ -57,29 +67,57 @@
 
       <!-- Shopping -->
       <div class="shopping-cart">
-        <div class="cart-item">
-          <img src="img/menu/sayapori.jpg" alt="" />
-          <div class="item-detail">
-            <h3>Product 1</h3>
-            <div class="item-price">IDR 10K</div>
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+          <div class="cart-item">
+            <img :src="`img/menu/${item.img}`" :alt="" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;
+                </button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button>
+                &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
           </div>
-          <i class="fa-solid fa-trash-can fa-lg" id="remove-item"></i>
-        </div>
-        <div class="cart-item">
-          <img src="img/menu/sayapori.jpg" alt="" />
-          <div class="item-detail">
-            <h3>Product 1</h3>
-            <div class="item-price">IDR 10K</div>
-          </div>
-          <i class="fa-solid fa-trash-can fa-lg" id="remove-item"></i>
-        </div>
-        <div class="cart-item">
-          <img src="img/menu/sayapori.jpg" alt="" />
-          <div class="item-detail">
-            <h3>Product 1</h3>
-            <div class="item-price">IDR 10K</div>
-          </div>
-          <i class="fa-solid fa-trash-can fa-lg" id="remove-item"></i>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">
+          Keranjang Belanja Kosong
+        </h4>
+        <h4 x-show="$store.cart.items.length">
+          Total : <span x-text="rupiah($store.cart.total)"></span>
+        </h4>
+
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkoutForm">
+            <h5>Customer Detail</h5>
+
+            <label for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name" />
+            </label>
+            <label for="email">
+              <span>Email</span>
+              <input type="email" name="email" id="email" />
+            </label>
+            <label for="phone">
+              <span>Phone</span>
+              <input type="number" name="phone" id="phone" autocomplete="off" />
+            </label>
+
+            <button
+              class="checkout-button"
+              type="submit"
+              id="checkout-button"
+              value="Checkout"
+            >
+              Checkout
+            </button>
+          </form>
         </div>
       </div>
     </nav>
@@ -184,7 +222,7 @@
       <div class="row">
         <div class="menu-card">
           <img
-            src="img/menu/sayapori.jpg"
+            src="img/menu/qqcrispyori.jpg"
             alt="sayapori"
             class="menu-card-img"
           />
@@ -193,7 +231,7 @@
         </div>
         <div class="menu-card">
           <img
-            src="img/menu/geprekpbawah.jpg"
+            src="img/menu/qqgeprek.jpg"
             alt="Geprek P.Bawah"
             class="menu-card-img"
           />
@@ -202,106 +240,50 @@
         </div>
         <div class="menu-card">
           <img
-            src="img/menu/chilipatas.jpg"
+            src="img/menu/qqcheese.jpg"
             alt="Chili P.Atas"
-            class="menu-card-img"
-          />
-          <h3 class="menu-card-title">- QQ Chili P.Atas -</h3>
-          <p class="menu-card-price">IDR 17K</p>
-        </div>
-        <div class="menu-card">
-          <img
-            src="img/menu/cheesepatas.jpg"
-            alt="Cheese P.Atas"
             class="menu-card-img"
           />
           <h3 class="menu-card-title">- QQ Cheese P.Atas -</h3>
           <p class="menu-card-price">IDR 18K</p>
-        </div>
-        <div class="menu-card">
-          <img
-            src="img/menu/sayapori.jpg"
-            alt="sayapori"
-            class="menu-card-img"
-          />
-          <h3 class="menu-card-title">- QQ Crispy Ori Sayap -</h3>
-          <p class="menu-card-price">IDR 10K</p>
         </div>
       </div>
     </section>
     <!-- Menu Section End -->
 
     <!-- Product Section Start -->
-    <section class="products" id="products">
+    <section class="products" id="products" x-data="products">
       <h2><span>Daftar All</span> Menu</h2>
 
       <div class="row">
-        <div class="product-card">
-          <div class="product-icons">
-            <a href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-            <a href="#" class="item-detail-button"
-              ><i class="fa-solid fa-eye fa-lg"></i
-            ></a>
-          </div>
-          <div class="product-image">
-            <img src="img/menu/sayapori.jpg" alt="product1" />
-          </div>
-          <div class="product-content">
-            <h3>Sayap ori</h3>
-            <div class="product-stars">
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)"
+                ><i class="fa-solid fa-cart-shopping fa-lg"></i
+              ></a>
+              <a href="#" class="item-detail-button"
+                ><i class="fa-solid fa-eye fa-lg"></i
+              ></a>
             </div>
-            <div class="product-price">IDR 10K</div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-icons">
-            <a href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-            <a href="#" class="item-detail-button"
-              ><i class="fa-solid fa-eye fa-lg"></i
-            ></a>
-          </div>
-          <div class="product-image">
-            <img src="img/menu/sayapori.jpg" alt="product1" />
-          </div>
-          <div class="product-content">
-            <h3>Sayap ori</h3>
-            <div class="product-stars">
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
+            <div class="product-image">
+              <img :src="`img/menu/${item.img}`" :alt="item.name" />
             </div>
-            <div class="product-price">IDR 10K</div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-icons">
-            <a href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
-            <a href="#" class="item-detail-button"
-              ><i class="fa-solid fa-eye fa-lg"></i
-            ></a>
-          </div>
-          <div class="product-image">
-            <img src="img/menu/sayapori.jpg" alt="product1" />
-          </div>
-          <div class="product-content">
-            <h3>Sayap ori</h3>
-            <div class="product-stars">
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
-              <i class="fa-regular fa-star fa-lg"></i>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <i class="fa-regular fa-star fa-lg"></i>
+                <i class="fa-regular fa-star fa-lg"></i>
+                <i class="fa-regular fa-star fa-lg"></i>
+                <i class="fa-regular fa-star fa-lg"></i>
+                <i class="fa-regular fa-star fa-lg"></i>
+              </div>
+              <div class="product-price">
+                <span x-text="rupiah(item.price)"></span>
+              </div>
             </div>
-            <div class="product-price">IDR 10K</div>
           </div>
-        </div>
+        </template>
       </div>
     </section>
     <!-- Product Section End -->
@@ -402,7 +384,25 @@
       </div>
     </div>
 
+    <!-- Popup Start -->
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <span class="popup-close" id="popup-close"
+          ><i class="fa-solid fa-xmark fa-sm"></i
+        ></span>
+        <h2>Selamat Datang di QQ Crispy!</h2>
+        <p>
+          Mohon Maaf untuk sementara website sedang dalam masa pengembangan,
+          jadi belum bisa melakukan pemesanan tetapi anda dapat menjelajah isi
+          website kami terima kasih.
+        </p>
+        <a href="#" class="popup-cta">Oke Saya Mengerti</a>
+      </div>
+    </div>
+    <!-- Popup End -->
+
     <!-- Javascript -->
     <script src="js/script.js"></script>
+    <script src="src/app.js"></script>
   </body>
 </html>
